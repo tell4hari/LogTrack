@@ -1,0 +1,150 @@
+﻿@model IEnumerable<LogTracker.Models.ProductViewModel>
+
+@{
+    ViewData["Title"] = "Log Sheet ";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+     <div >
+         <table>
+             <tr>
+            <td><b>User Name </b> </td>
+            <td> @ViewBag.user  </td>
+            <td><b> Date </b>  </td>
+            <td>@DateTime.Now</td>
+            </tr>
+         </table>
+          </div>
+    
+</p>
+<form asp-action="Create">
+<table id="userTb" class="table">
+    <thead>
+        <tr>
+            <th>
+               GameName
+            </th>
+           @* <th>
+               Desc
+            </th>
+            <th>
+                SKU
+            </th>
+            <th>
+               StartDate
+            </th>
+            <th>
+                EndDate
+            </th>*@
+            <th>
+               Price
+            </th>
+            <th>
+               Sold Count
+            </th>
+            <th>
+                Sold Value
+            </th>
+         @*   <th>
+               CredatedDate
+            </th>
+            <th>
+               CredatedBy
+            </th>*@
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ 
+            int i = 0;   //add this..
+        }
+    @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GameName)
+                </td>
+                @*<td>
+                    @Html.DisplayFor(modelItem => item.Desc)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SKU)
+                </td>
+                <td>
+                    <input asp-for="@item.StartDate" class="form-control" />
+                    
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>*@
+                <td>
+                    @*$@Html.DisplayFor(modelItem => item.Price)*@
+                    <label id="price" > $@item.Price</label>
+                    @*<input  id="price" asp-for= "@item.Price" class="form-control" />*@
+                </td>
+                <td>
+                    <input asp-for="@item.SoldCount" onchange="calcSubTotal(this,@i)" />
+                </td>
+                <td>
+                   @* $@Html.DisplayFor(modelItem => item.SoldValue)*@
+                    <input id="upvalue" asp-for="@item.SoldValue" class="form-control" />
+                </td>
+                <td>
+                   @* @Html.DisplayFor(modelItem => item.SoldCount * item.Price)*@
+                </td>
+                <td>
+                  @*  @Html.DisplayFor(modelItem => item.CredatedBy)*@
+                </td>
+                <td>
+                 @*   <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
+                </td>
+
+            </tr>
+            i++;
+        }@*
+        <input type="submit" asp-action="Create" class="btn btn-primary" />*@
+            <div class="form-group">
+                <input type="submit" value="Create" onclick="GetTableData()" class="btn btn-primary" />
+                <input type="submit" value="Save" onclick="SaveTableData()" class="btn btn-primary" />
+            </div>
+       </tbody>
+      
+</table>
+</form>
+@section Scripts
+    {
+          <script type="text/javascript">
+            //debugger
+
+        function calcSubTotal(element,index) {
+            var table1 = document.getElementById("userTb");
+           // var row = $('table1 > tbody > tr');
+           //var price= $(element).parents("tr").children().eq(index)[0].childNodes[1].value;
+           // var price = $(element).parents("tr").children().eq(1)[0].childNodes[0];
+            //price = row[index].
+            var price = table1.rows[index + 1].cells[1].innerText;
+            //price= $("#price")[0].innerHTML;
+            var numberInput = $(element).val();
+            //$(element).parents("tr").children().eq(1)[0].childNodes[3].html("kkkk");
+            $(element).parents("tr").children().eq(3)[0].innerHTML = (parseInt(price.replace("$","")) * numberInput)
+            ViewBag.MyData = table1;
+           // alert(numberInput);
+           
+        }
+
+       
+    </script>
+
+    <script type="text/javascript">
+        //alert("hi");
+        debugger;
+        function GetTableData() {
+            var table1 = document.getElementById("userTb");
+            
+        }
+    </script>
+}

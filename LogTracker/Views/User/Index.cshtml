@@ -1,0 +1,64 @@
+﻿@model System.Data.DataTable;
+
+@{
+    ViewData["Title"] = "List Of Users";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               LoginName
+            </th>
+            <th>
+              Password
+            </th>
+            <th>
+               Phone
+            </th>
+            <th>
+               Email
+            </th>
+            <th>
+               IsAdmin
+            </th>
+            <th>
+                <a asp-action="AddOrEdit">Create New</a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@for (int i = 0; i < Model.Rows.Count; i++)
+      
+{
+        <tr>
+            <td>
+                    @Model.Rows[i]["LoginName"]
+            </td>
+            <td>
+                    @Model.Rows[i]["PWD"]
+                    
+            </td>
+            <td>
+                    @Model.Rows[i]["Phone"]
+            </td>
+            <td>
+                    @Model.Rows[i]["Email"]
+            </td>
+            <td>
+                    @Model.Rows[i]["IsAdmin"]
+            </td>
+            <td>
+                    <a asp-action="AddOrEdit" asp-route-id="@Model.Rows[i]["ID"]">Edit</a> |
+          @*      <a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                    <a asp-action="Delete" asp-route-id="@Model.Rows[i]["ID"]">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
